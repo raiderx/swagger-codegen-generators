@@ -10,8 +10,9 @@
         }{{/isOAuth}}){{#hasMore}},
         {{/hasMore}}{{/authMethods}}
     }{{/hasAuthMethods}}, tags={ {{#vendorExtensions.x-tags}}"{{tag}}"{{#hasMore}}, {{/hasMore}}{{/vendorExtensions.x-tags}} })
-    @ApiResponses(value = { {{#responses}}
-        @ApiResponse(code = {{{code}}}, message = "{{{message}}}", response = {{{baseType}}}.class{{#containerType}}, responseContainer = "{{{containerType}}}"{{/containerType}}){{#hasMore}},{{/hasMore}}{{/responses}}
+    @ApiResponses(value = {
+        {{#responses}}@ApiResponse(code = {{{code}}}, message = "{{{message}}}", response = {{{baseType}}}.class{{#containerType}}, responseContainer = "{{{containerType}}}"{{/containerType}}){{#hasMore}},{{/hasMore}}
+        {{/responses}}
     })
     {{/useOas2}}
     {{^useOas2}}

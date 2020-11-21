@@ -18,7 +18,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-            <failOnMissingWebXml>false</failOnMissingWebXml>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
       <plugin>
@@ -59,6 +59,23 @@
     </dependency>
     {{/useOas2}}
     <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.10.1</version>
+    </dependency>
+    {{#supportJava6}}
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons_lang3_version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons_io_version}</version>
+    </dependency>
+    {{/supportJava6}}
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit-version}</version>
@@ -87,14 +104,33 @@
     {{#useBeanValidation}}
     <!-- Bean Validation API support -->
     <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.1.0.Final</version>
-        <scope>provided</scope>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>1.1.0.Final</version>
+      <scope>provided</scope>
     </dependency>
-{{/useBeanValidation}}
+    {{/useBeanValidation}}
   </dependencies>
   <properties>
+    {{#supportJava6}}
+    <commons_io_version>2.5</commons_io_version>
+    <commons_lang3_version>3.6</commons_lang3_version>
+    {{/supportJava6}}
     <junit-version>4.13.1</junit-version>
+    {{#java8}}
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    {{/java8}}
+    {{^java8}}
+    {{^supportJava6}}
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    {{/supportJava6}}
+    {{#supportJava6}}
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    {{/supportJava6}}
+    {{/java8}}
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
