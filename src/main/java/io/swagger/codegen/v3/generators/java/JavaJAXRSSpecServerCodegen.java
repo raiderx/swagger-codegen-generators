@@ -19,6 +19,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static io.swagger.codegen.v3.CodegenConstants.HAS_ENUMS_EXT_NAME;
+import static io.swagger.codegen.v3.CodegenConstants.IS_ENUM_EXT_NAME;
+import static io.swagger.codegen.v3.generators.handlebars.ExtensionHelper.getBooleanValue;
+
 public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen {
 
     public static final String INTERFACE_ONLY = "interfaceOnly";
@@ -146,7 +150,7 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen {
     @Override
     public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
         super.postProcessModelProperty(model, property);
-        if (useOas2) {
+        /*if (useOas2) {
             model.imports.remove("ApiModelProperty");
             model.imports.remove("ApiModel");
         } else {
@@ -155,7 +159,21 @@ public class JavaJAXRSSpecServerCodegen extends AbstractJavaJAXRSServerCodegen {
         model.imports.remove("JsonSerialize");
         model.imports.remove("ToStringSerializer");
         model.imports.remove("JsonValue");
-        model.imports.remove("JsonProperty");
+        model.imports.remove("JsonProperty");*/
+        boolean isEnum = getBooleanValue(model, IS_ENUM_EXT_NAME);
+        if (!Boolean.TRUE.equals(isEnum)) {
+            //model.imports.add("JsonProperty");
+            boolean hasEnums = getBooleanValue(model, HAS_ENUMS_EXT_NAME);
+            if (Boolean.TRUE.equals(hasEnums)) {
+                model.imports.add("JsonValue");
+                model.imports.add("JsonCreator");
+            }
+        } else { // enum class
+            //Needed imports for Jackson's JsonCreator
+            if (additionalProperties.containsKey("jackson")) {
+                model.imports.add("JsonCreator");
+            }
+        }
     }
 
     @Override

@@ -1,0 +1,47 @@
+openapi: 3.0.3
+servers: []
+info:
+  description: |
+    Hello World project
+  version: "1.0.0"
+  title: Swagger Hello World
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  '/hello':
+    post:
+      summary: Hello method
+      operationId: hello
+      responses:
+        '200':
+          description: Hello response if success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/HelloResponse'
+      requestBody:
+        description: Hello request
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/HelloRequest'
+components:
+  schemas:
+    HelloRequest:
+      type: object
+      properties:
+        id:
+          description: Identifier
+          type: integer
+          format: int32
+    HelloResponse:
+      type: object
+      properties:
+        id:
+          description: Identifier
+          type: integer
+          format: int32
