@@ -38,6 +38,8 @@ components:
           description: Identifier
           type: integer
           format: int32
+      required:
+        - id
     HelloResponse:
       type: object
       properties:
@@ -45,3 +47,5 @@ components:
           description: Identifier
           type: integer
           format: int32
+      required:
+        - id

@@ -151,7 +151,7 @@ public class JavaJAXRSSpecServerCodegenTest {
     }
 
     private File prepareFolder(String folder) {
-        File root = Paths.get(System.getProperty("user.home"), "projects", "generated", folder).toFile();
+        File root = Paths.get(System.getProperty("user.dir"),"..", "..", "IdeaProjects", "generated", folder).toFile();
         if (root.exists()) {
             root.delete();
         }
